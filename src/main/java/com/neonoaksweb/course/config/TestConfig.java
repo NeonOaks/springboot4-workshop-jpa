@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.neonoaksweb.course.entities.Category;
 import com.neonoaksweb.course.entities.Order;
 import com.neonoaksweb.course.entities.OrderItem;
+import com.neonoaksweb.course.entities.Payment;
 import com.neonoaksweb.course.entities.Product;
 import com.neonoaksweb.course.entities.User;
 import com.neonoaksweb.course.entities.enums.OrderStatus;
@@ -85,6 +86,11 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"),o1); // para salvar um objeto dependente, numa relação 1X1 não chamar o repository do proprio objeto nao.  
+		o1.setPayment(pay1); // associei o order o1 ao payment pay1, tem que ser associação de mão dubla em memoria.
+		
+		orderRepository.save(o1);
 	}
 	
 	
